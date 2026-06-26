@@ -940,13 +940,13 @@ GameObject:
   - component: {fileID: 306823827}
   - component: {fileID: 306823826}
   - component: {fileID: 306823825}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bus (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &306823825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,17 +959,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727caa74d1ce3bf409855a49b9db621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarAI
-  destinations:
-  - {fileID: 263075077}
-  - {fileID: 1614239511}
-  - {fileID: 694979549}
-  - {fileID: 841778662}
+  startRoute: []
   currentWaypointIndex: 0
+  currentRoute: []
+  route_1: []
+  route_2: []
+  route_3: []
   trafficLight: {fileID: 997709466}
   stopPoint: {fileID: 1816627059}
   stopDistance: 2
   normalSpeed: 3
   slowSpeed: 1
+  dist: 0
+  rayOrigin: {fileID: 1612012036}
+  rayDistance: 4
+  carLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  carInFront: 0
 --- !u!195 &306823826
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1084,6 +1091,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1398709539}
+  - {fileID: 1612012036}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 178.534, z: 0}
 --- !u!1 &330585543
@@ -1172,8 +1180,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.08098306, y: 0.9073336, z: -0.20537527, w: -0.3577828}
-  m_LocalPosition: {x: 12.017567, y: 8.086167, z: 12.370009}
+  m_LocalRotation: {x: 0.11509484, y: 0.69645596, z: -0.114681184, w: 0.6989639}
+  m_LocalPosition: {x: -22.041985, y: 8.186993, z: 0.9275905}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2818,7 +2826,7 @@ GameObject:
   - component: {fileID: 794926874}
   - component: {fileID: 794926873}
   - component: {fileID: 794926872}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3336,17 +3344,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727caa74d1ce3bf409855a49b9db621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarAI
-  destinations:
-  - {fileID: 263075077}
-  - {fileID: 1614239511}
-  - {fileID: 694979549}
-  - {fileID: 841778662}
+  startRoute: []
   currentWaypointIndex: 0
+  currentRoute: []
+  route_1: []
+  route_2: []
+  route_3: []
   trafficLight: {fileID: 997709466}
   stopPoint: {fileID: 1816627059}
   stopDistance: 2
   normalSpeed: 3
   slowSpeed: 1
+  dist: 0
+  rayOrigin: {fileID: 0}
+  rayDistance: 4
+  carLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  carInFront: 0
 --- !u!195 &851893143
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3802,8 +3817,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoplightScript
   isGreen: 1
-  greenTime: 5
-  redTime: 5
+  greenTime: 12
+  redTime: 7
   timer: 0
 --- !u!1 &1030625576
 GameObject:
@@ -4029,6 +4044,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035404241}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1050746203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050746204}
+  m_Layer: 0
+  m_Name: Origin (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050746204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050746203}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9999183, z: -0, w: 0.012789354}
+  m_LocalPosition: {x: 0.14, y: 0.16332906, z: 0.664}
+  m_LocalScale: {x: 1.3101064, y: 0.7101263, z: 0.41287428}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1365197464}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1103690136
 GameObject:
   m_ObjectHideFlags: 0
@@ -4603,7 +4649,7 @@ GameObject:
   - component: {fileID: 1365197461}
   - component: {fileID: 1365197465}
   - component: {fileID: 1365197466}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4702,6 +4748,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 794926875}
+  - {fileID: 1050746204}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 178.534, z: 0}
 --- !u!195 &1365197465
@@ -4738,17 +4785,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727caa74d1ce3bf409855a49b9db621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarAI
-  destinations:
-  - {fileID: 263075077}
-  - {fileID: 1614239511}
-  - {fileID: 694979549}
-  - {fileID: 841778662}
+  startRoute: []
   currentWaypointIndex: 0
+  currentRoute: []
+  route_1: []
+  route_2: []
+  route_3: []
   trafficLight: {fileID: 997709466}
   stopPoint: {fileID: 1816627059}
   stopDistance: 2
   normalSpeed: 3
   slowSpeed: 1
+  dist: 0
+  rayOrigin: {fileID: 1050746204}
+  rayDistance: 4
+  carLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  carInFront: 1
 --- !u!1 &1375516699
 GameObject:
   m_ObjectHideFlags: 0
@@ -5097,7 +5151,7 @@ GameObject:
   - component: {fileID: 1398709542}
   - component: {fileID: 1398709541}
   - component: {fileID: 1398709540}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5869,6 +5923,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1612012035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1612012036}
+  m_Layer: 0
+  m_Name: Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1612012036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612012035}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9999183, z: 0, w: 0.012789354}
+  m_LocalPosition: {x: 0.27, y: 0.16332906, z: 0.681}
+  m_LocalScale: {x: 1.3101063, y: 0.71012634, z: 0.41287422}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 306823830}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1614239507
 GameObject:

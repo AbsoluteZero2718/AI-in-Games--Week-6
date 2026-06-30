@@ -3,7 +3,7 @@ using Unity.AI;
 using UnityEngine.AI;
 using Unity.VisualScripting;
 
-
+[RequireComponent(typeof(NavMeshAgent))]
 public class CarAI : MonoBehaviour
 {
     private NavMeshAgent CarAgent;
@@ -19,46 +19,55 @@ public class CarAI : MonoBehaviour
 
     bool routeChosen = false;
 
+    //[Header("Lifecycle")]
+    //public bool startOnAwake = false;
 
     [Header("Traffic Light")]
     //Traffic Rules
     public StoplightScript trafficLight;
     public Transform stopPoint;
-    public float stopDistance = 2.0f;
+    public float stopDistance = 2f;
 
     [Header("Speed")]
-    //SPEED
-    public float normalSpeed;
-    public float slowSpeed;
+    public float normalSpeed = 5f;
+    public float slowSpeed = 2f;
     public float dist;
 
-    [Header("Raycast Car Detection0")]
+    [Header("Raycast Car Detection")]
     public Transform rayOrigin;
     public float rayDistance = 4f;
     public LayerMask carLayer;
     public bool carInFront = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
     
         CarAgent = GetComponent<NavMeshAgent>();
         CarAgent.speed = normalSpeed;
 
-        currentRoute = startRoute;
-        currentWaypointIndex = 0;
-        MoveToCurrentWaypoint(); // once the game starts, the vehicle starts to move
+        //if (startOnAwake)
+        //    BeginDriving();
     }
+
+    //public void BeginDriving()
+    //{
+    //    currentRoute = startRoute;
+    //    currentWaypointIndex = 0;
+    //    routeChosen = true;
+    //    MoveToCurrentWaypoint();
+    //}
 
     // Update is called once per frame
     void Update()
     {
         CheckCarInFront();
 
-        if(carInFront)
+        if (carInFront)
         {
             CarAgent.isStopped = true;
             return;
         }
+
         FollowTrafficLight();
 
         if (CarAgent.pathPending)
@@ -70,73 +79,69 @@ public class CarAI : MonoBehaviour
         {
             GoToNextWaypoint();
         }
+            
     }
 
     private void FollowTrafficLight()
     {
-        if(trafficLight == null || stopPoint == null)
-        {
+        if (trafficLight == null || stopPoint == null)
+        { 
             return;
         }
 
         dist = Vector3.Distance(transform.position, stopPoint.position);
-        
-        if(!trafficLight.isGreen && dist <= stopDistance) // Red light
+
+        if (!trafficLight.isGreen && dist <= stopDistance)
         {
             CarAgent.isStopped = true;
         }
+           
         else
         {
             CarAgent.isStopped = false;
             CarAgent.speed = normalSpeed;
         }
-
     }
 
     private void MoveToCurrentWaypoint()
     {
-        if(currentRoute.Length == 0 || currentRoute == null)
-        {
-            CarAgent.SetDestination(currentRoute[currentWaypointIndex].position);
-        }
-        //CarAgent.SetDestination(destinations[currentWaypointIndex].position);
+        if (currentRoute == null || currentRoute.Length == 0)
+            return;
+
+        CarAgent.SetDestination(currentRoute[currentWaypointIndex].position);
     }
+        //CarAgent.SetDestination(destinations[currentWaypointIndex].position);
 
     private void GoToNextWaypoint()
     {
-        currentWaypointIndex++; // tells the vehicle to go to next waypoint
-        if(currentWaypointIndex >= currentRoute.Length)
+        currentWaypointIndex++;
+
+        if (currentWaypointIndex >= currentRoute.Length)
         {
-            if(routeChosen)
+            if (!routeChosen)
             {
                 ChooseRandomRoute();
+                return;
             }
-            else
-            {
-                currentWaypointIndex = 0;
-                MoveToCurrentWaypoint();
-            }
+
+            Destroy(gameObject);
+            return;
         }
+
         MoveToCurrentWaypoint();
-       
     }
 
     public void ChooseRandomRoute()
     {
         routeChosen = true;
-        int randomRoute = Random.Range(0, 2);
-        if(randomRoute == 0)
-        {
+        int randomRoute = Random.Range(0, 3);
+        if (randomRoute == 0)
             currentRoute = route_1;
-        }
-        else if(randomRoute == 1)
-        {
+        else if (randomRoute == 1)
             currentRoute = route_2;
-        }
         else
-        {
             currentRoute = route_3;
-        }
+
         currentWaypointIndex = 0;
         MoveToCurrentWaypoint();
     }
@@ -144,22 +149,15 @@ public class CarAI : MonoBehaviour
     private void CheckCarInFront()
     {
         carInFront = false;
-        if(rayOrigin == null)
-        {
+        if (rayOrigin == null)
             return;
-        }
 
-        //Vector3 origin = transform.position + Vector3.up * 0.5f;
         Vector3 origin = rayOrigin.position;
         Vector3 direction = transform.forward;
 
         Debug.DrawRay(origin, direction * rayDistance, Color.green);
 
-        RaycastHit hit;
-
-        if(Physics.Raycast(origin, direction, out hit, rayDistance, carLayer))
-        {
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, rayDistance, carLayer))
             carInFront = true;
-        }
     }
 }
